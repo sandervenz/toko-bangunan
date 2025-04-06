@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Toko Bangunan Profesional</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Toko Bangunan</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="checkout">
+        <div class="container">
+            <h2>Rincian Pesanan</h2>
+
+            <!-- Daftar produk dari keranjang akan ditampilkan di sini -->
+            <div class="checkout-items" id="checkoutItems"></div>
+
+
+            <h3>Informasi Pengiriman</h3>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap</label>
+                    <input type="text" id="name" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Masukkan email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Alamat Pengiriman</label>
+                    <input type="text" id="address" placeholder="Masukkan alamat pengiriman" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Nomor Telepon</label>
+                    <input type="text" id="phone" placeholder="Masukkan nomor telepon" required>
+                </div>
+                <button type="submit">Konfirmasi Pembelian</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Konfirmasi Pemesanan -->
+    <section id="order-summary">
+        <h2>Konfirmasi Pemesanan</h2>
+        <div id="order-details">
+            <p><strong>No Pemesanan:</strong> <span id="order-number"></span></p>
+            <p><strong>Tanggal Pemesanan:</strong> <span id="order-date"></span></p>
+            <p><strong>Kode Pelanggan:</strong> <span id="customer-code"></span></p>
+            <p><strong>Nama Pelanggan:</strong> <span id="customer-name"></span></p>
+            <p><strong>Alamat Pelanggan:</strong> <span id="customer-address"></span></p>
+            <p><strong>No Telepon:</strong> <span id="customer-phone"></span></p>
+            <p><strong>Uniq Transfer:</strong> <span id="unique-transfer"></span></p>
+            <p><strong>Status Bayar:</strong> <span id="payment-status"></span></p>
+        </div>
+    
+        <!-- Rincian Barang -->
+        <h3>Rincian Barang</h3>
+        <table id="order-items">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Kode</th>
+                    <th>Nama Barang</th>
+                    <th>Harga</th>
+                    <th>Jumlah</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Items will be inserted here dynamically -->
+            </tbody>
+        </table>
+    
+        <div id="order-totals">
+            <p><strong>Total Belanja:</strong> Rp <span id="total-shopping"></span></p>
+            <p><strong>Total Biaya Kirim:</strong> Rp <span id="shipping-fee"></span></p>
+            <p><strong>Grand Total:</strong> Rp <span id="grand-total"></span></p>
+        </div>
+    
+        <!-- Button to Print -->
+        <button id="print-btn">Cetak Pemesanan</button>
+    </section>
+
+
+    <script src="checkout.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,426 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Container for all content */
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* Header Section */
+header {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    /* Gradien biru tua ke abu-abu */
+    color: #fff;
+    padding: 20px 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    /* Membuat logo dan menu di tengah */
+    align-items: center;
+    height: 120px;
+    /* Menyesuaikan tinggi header */
+}
+
+/* Logo */
+header .logo {
+    position: absolute;
+    left: 90px;
+    top: 31px;
+}
+
+header .logo h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Menu Container di Tengah */
+header .nav-container {
+    display: flex;
+    justify-content: center;
+    /* Memastikan menu di tengah */
+    flex-grow: 1;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+header nav ul li {
+    position: relative;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    background-color: #e67e22;
+    /* Oranye untuk aksen */
+    color: #fff;
+    border-radius: 5px;
+}
+
+/* Hero Section */
+.hero {
+    background: url(image/observation-urban-building-business-steel.jpg) no-repeat center center/cover;
+    height: 1000px;
+    /* Perlebar tinggi hero section */
+    position: relative;
+    background-attachment: fixed;
+    width: 100%;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Menjaga konten tetap terpusat vertikal */
+    color: white;
+    text-align: center;
+    padding: 0 20px;
+    /* Memberikan ruang pada sisi kiri dan kanan */
+}
+
+/* Hero Section */
+.hero {
+    background: url(image/observation-urban-building-business-steel.jpg) no-repeat center center/cover;
+    height: 950px;
+    /* Menurunkan tinggi hero section */
+    position: relative;
+    background-attachment: fixed;
+    width: 100%;
+}
+
+/* Hero Section Animations */
+.hero-content h2 {
+    opacity: 0;
+    transform: scale(0.8);
+    /* Memulai dengan ukuran kecil */
+    animation: zoomIn 1s ease-out forwards 0.5s;
+    /* Animasi zoom */
+    font-size: 2.8rem;
+    /* Menyesuaikan ukuran font lebih kecil */
+    line-height: 1.3;
+    font-weight: bold;
+}
+
+.hero p {
+    opacity: 0;
+    transform: scale(0.8);
+    /* Memulai dengan ukuran kecil */
+    animation: zoomIn 1s ease-out forwards 1s;
+    /* Animasi zoom */
+    font-size: 1.1rem;
+    /* Menyesuaikan ukuran font paragraf */
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.hero .btn {
+    opacity: 0;
+    transform: scale(0.8);
+    /* Memulai dengan ukuran kecil */
+    animation: zoomIn 1s ease-out forwards 1.5s;
+    /* Animasi zoom */
+    background-color: #e67e22;
+    color: white;
+    padding: 12px 25px;
+    /* Ukuran tombol disesuaikan */
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    /* Pastikan tombol berada di tengah */
+}
+
+/* Animasi Zoom In */
+@keyframes zoomIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+        /* Zoom in ke ukuran normal */
+    }
+}
+
+/* Tombol hover */
+.hero .btn:hover {
+    background-color: #d35400;
+    /* Warna lebih gelap saat hover */
+}
+
+/* Produk Section */
+.produk {
+    padding: 120px 0;
+    /* Menambah padding atas dan bawah untuk memperlebar ruang */
+    background: linear-gradient(to right, #f7f7f7, #ffffff);
+    text-align: center;
+}
+
+.produk h2 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin-bottom: 50px;
+    color: #333;
+}
+
+.produk-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.produk-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 30%;
+    min-height: 350px;
+}
+
+.produk-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.produk-item h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.produk-item p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.produk-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Layanan Section */
+.layanan {
+    padding: 120px 0;
+    /* Menambah padding atas dan bawah untuk memperlebar ruang */
+    text-align: center;
+    background-color: #f1f1f1;
+}
+
+.layanan h2 {
+    font-size: 2.5rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+.layanan-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.layanan-item {
+    width: 30%;
+    padding: 30px;
+    background: linear-gradient(45deg, #e67e22, #f39c12);
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.layanan-item .icon-container {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.layanan-item h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.layanan-item p {
+    font-size: 1rem;
+}
+
+.layanan-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Kontak Section */
+.kontak {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    /* Gradient Background */
+    color: white;
+    text-align: center;
+}
+
+.kontak-header h2 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.kontak-header p {
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+}
+
+.kontak-form {
+    width: 50%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.kontak-form input,
+.kontak-form textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #ecf0f1;
+}
+
+.kontak-form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #e67e22;
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.kontak-form button:hover {
+    background-color: #d35400;
+}
+
+/* Responsif Desain */
+@media screen and (max-width: 768px) {
+    .kontak-form {
+        width: 80%;
+    }
+}
+
+/* Keranjang Icon */
+.cart {
+    position: relative;
+    margin-left: 20px;
+}
+
+.cart .cart-icon {
+    color: #fff;
+    font-size: 1.8rem;
+    position: relative;
+    text-decoration: none;
+}
+
+.cart .cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e67e22;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    padding: 0;
+}
+
+/* Animasi Scroll */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        /* Mulai dari bawah */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Class yang akan diterapkan saat elemen berada di dalam tampilan */
+.scroll-animate {
+    opacity: 0;
+    /* Mulai dengan opasitas 0 */
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+/* Apply animation to header */
+.header-animate {
+    animation: slideUp 1s forwards;
+    /* Menambahkan animasi slide up */
+}
+
+/* Jika ingin fade in, gunakan: */
+.fade-in {
+    animation: fadeIn 1s forwards;
+}
+
