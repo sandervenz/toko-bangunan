@@ -17,31 +17,30 @@
                 <h1>Toko Bangunan</h1>
             </div>
             <div class="nav-container">
-            <!-- Ikon Keranjang -->
-            <div class="cart">
-                <a href="#" class="cart-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span> <!-- Menampilkan jumlah item dalam keranjang -->
-                </a>
-            </div>
+                <!-- Ikon Keranjang -->
+                <div class="cart">
+                    <a href="#" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
 
-            <!-- Ikon Kembali di pojok kiri tanpa teks -->
-            <div class="back-icon">
-                <a href="home.html"><i class="fas fa-arrow-left"></i></a>
-            </div>
+                <!-- Ikon Kembali -->
+                <div class="back-icon">
+                    <a href="home.html"><i class="fas fa-arrow-left"></i></a>
+                </div>
 
-            <!-- Keranjang Modal -->
-            <div class="cart-modal" id="cartModal">
-                <div class="cart-modal-content">
-                    <span class="close-btn" id="closeBtn">&times;</span>
-                    <h2>Keranjang Belanja</h2>
-                    <div class="cart-items" id="cartItems">
-                        <!-- Item akan ditambahkan di sini secara dinamis -->
+                <!-- Keranjang Modal -->
+                <div class="cart-modal" id="cartModal">
+                    <div class="cart-modal-content">
+                        <span class="close-btn" id="closeBtn">&times;</span>
+                        <h2>Keranjang Belanja</h2>
+                        <div class="cart-items" id="cartItems"></div>
+                        <div class="cart-total">
+                            <p>Total: Rp <span id="cartTotal">0</span></p>
+                        </div>
+                        <button id="checkoutBtn" class="checkout-btn">Checkout</button>
                     </div>
-                    <div class="cart-total">
-                        <p>Total: Rp <span id="cartTotal">0</span></p>
-                    </div>
-                    <button id="checkoutBtn" class="checkout-btn">Checkout</button>
                 </div>
             </div>
         </div>
@@ -51,121 +50,10 @@
         <div class="container">
             <h2 class="section-title">Belanja Produk Kami</h2>
             <div class="produk-container">
-                <!-- Produk 1 -->
-                <div class="produk-item">
-                    <img src="image/bricklaying-construction-worker.png" alt="Semen Berkualitas">
-                    <h3>Semen Berkualitas</h3>
-                    <p>Semua jenis semen untuk keperluan proyek Anda, dengan kualitas terbaik yang memenuhi standar
-                        industri.</p>
-                    <p class="harga">Rp 100.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 2 -->
-                <div class="produk-item">
-                    <img src="image/background-made-from-bricks.jpg" alt="Batu Bata">
-                    <h3>Batu Bata</h3>
-                    <p>Batu bata kuat dan tahan lama untuk semua jenis konstruksi, tersedia dalam berbagai ukuran.</p>
-                    <p class="harga">Rp 75.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 3 -->
-                <div class="produk-item">
-                    <img src="image/top-view-industrial-pipes-pipe-r.png" alt="Pipa PVC">
-                    <h3>Pipa PVC</h3>
-                    <p>Pipa berkualitas tinggi untuk instalasi saluran air dan drainase, tahan lama dan mudah dipasang.</p>
-                    <p class="harga">Rp 50.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 4 -->
-                <div class="produk-item">
-                    <img src="image/pile-wood-planks-front-view_23-2.png" alt="Balok Kayu">
-                    <h3>Balok Kayu</h3>
-                    <p>Balok kayu berkualitas tinggi untuk konstruksi bangunan, mudah digunakan dan tahan lama.</p>
-                    <p class="harga">Rp 120.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 5 -->
-                <div class="produk-item">
-                    <img src="image/top-view-paint-can_23-2149705393.png" alt="Cat dan Kuas">
-                    <h3>Cat dan Kuas</h3>
-                    <p>Beragam cat dan kuas untuk finishing proyek bangunan Anda, memberikan hasil akhir yang sempurna.</p>
-                    <p class="harga">Rp 85.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 6 -->
-                <div class="produk-item">
-                    <img src="image/construction-pvc-pipes-compositi.png" alt="Batang Baja">
-                    <h3>Batang Baja</h3>
-                    <p>Batang baja untuk kebutuhan konstruksi yang kuat dan tahan lama, tersedia dalam berbagai ukuran.</p>
-                    <p class="harga">Rp 150.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 7 -->
-                <div class="produk-item">
-                    <img src="image/colored-realistic-ceramic-floor.png" alt="Ubin Keramik">
-                    <h3>Ubin Keramik</h3>
-                    <p>Ubin keramik dengan desain modern dan kualitas terbaik, cocok untuk berbagai jenis proyek.</p>
-                    <p class="harga">Rp 200.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 8 -->
-                <div class="produk-item">
-                    <img src="image/metallic-key-door-lock_23-215101.png" alt="Gagang Pintu">
-                    <h3>Gagang Pintu</h3>
-                    <p>Gagang pintu dengan desain ergonomis dan tahan lama, cocok untuk semua jenis pintu.</p>
-                    <p class="harga">Rp 45.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 9 -->
-                <div class="produk-item">
-                    <img src="image/th (1).png" alt="Mesin Pengaduk Beton">
-                    <h3>Mesin Pengaduk Beton</h3>
-                    <p>Mesin pengaduk beton yang efisien untuk membantu mempercepat pekerjaan konstruksi Anda.</p>
-                    <p class="harga">Rp 1.000.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 10 -->
-                <div class="produk-item">
-                    <img src="image/construction-technicians-are-mix.png" alt="Sekop Batu">
-                    <h3>Sekop Batu</h3>
-                    <p>Sekop batu untuk pekerjaan konstruksi yang mudah digunakan dan tahan lama.</p>
-                    <p class="harga">Rp 60.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 11 -->
-                <div class="produk-item">
-                    <img src="image/front-view-protective-glasses-wi.png" alt="Helm Keamanan">
-                    <h3>Helm Keamanan</h3>
-                    <p>Helm keselamatan untuk melindungi kepala pekerja di area konstruksi, memenuhi standar keselamatan.
-                    </p>
-                    <p class="harga">Rp 40.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
-    
-                <!-- Produk 12 -->
-                <div class="produk-item">
-                    <img src="image/realistic-vector-icon-illustrati.png" alt="Tangga Aluminium">
-                    <h3>Tangga Aluminium</h3>
-                    <p>Tangga aluminium yang ringan dan kuat, cocok untuk pekerjaan di ketinggian.</p>
-                    <p class="harga">Rp 300.000</p> <!-- Menambahkan harga produk -->
-                    <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
-                </div>
+                <!-- Produk akan ditampilkan secara dinamis di sini -->
             </div>
         </div>
     </section>
-
-
-
 
     <script src="belanja.js"></script>
 </body>
