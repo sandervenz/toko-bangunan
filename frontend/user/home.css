@@ -88,7 +88,7 @@ header nav ul li a:hover {
 /* Hero Section */
 .hero {
     background: url(image/observation-urban-building-business-steel.jpg) no-repeat center center/cover;
-    height: 1000px;
+    height: 700px;
     /* Perlebar tinggi hero section */
     position: relative;
     background-attachment: fixed;
@@ -110,16 +110,6 @@ header nav ul li a:hover {
     text-align: center;
     padding: 0 20px;
     /* Memberikan ruang pada sisi kiri dan kanan */
-}
-
-/* Hero Section */
-.hero {
-    background: url(image/observation-urban-building-business-steel.jpg) no-repeat center center/cover;
-    height: 950px;
-    /* Menurunkan tinggi hero section */
-    position: relative;
-    background-attachment: fixed;
-    width: 100%;
 }
 
 /* Hero Section Animations */
