@@ -26,48 +26,52 @@ document.addEventListener('DOMContentLoaded', function () {
         products.forEach(product => {
             const item = document.createElement('div');
             item.className = 'produk-item';
+    
+            let addToCartButton = '';
+            if (product.stock > 0) {
+                addToCartButton = `<a href="#" class="btn" data-name="${product.name}" data-price="${product.price}" data-stock="${product.stock}">
+                    <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                </a>`;
+            } else {
+                addToCartButton = `<span class="btn disabled" style="opacity: 0.5; cursor: not-allowed;">Stok Habis</span>`;
+            }
+    
             item.innerHTML = `
                 <img src="${product.image}" alt="${product.name}">
                 <h3>${product.name}</h3>
                 <p>${product.description}</p>
                 <p class="harga">Rp ${parseInt(product.price).toLocaleString()}</p>
                 <p class="stok">Stok: ${product.stock}</p>
-                <a href="#" class="btn"><i class="fas fa-cart-plus"></i> Tambah ke Keranjang</a>
+                ${addToCartButton}
             `;
             container.appendChild(item);
         });
     
         addToCartEvent();
-    
-        // Tambahkan tombol checkout di bawah produk
-        const checkoutContainer = document.createElement('div');
-        checkoutContainer.style.textAlign = 'center';
-        checkoutContainer.style.marginTop = '30px';
-    
-        const checkoutBtn = document.createElement('button');
-        checkoutBtn.textContent = 'Lanjut ke Checkout';
-        checkoutBtn.classList.add('btn', 'checkout-belanja');
-        checkoutBtn.onclick = function () {
-            window.location.href = 'checkout.html';
-        };
-    
-        checkoutContainer.appendChild(checkoutBtn);
-        container.parentNode.appendChild(checkoutContainer);
     }
     
-
     function addToCartEvent() {
-        const addToCartButtons = document.querySelectorAll('.btn');
+        const addToCartButtons = document.querySelectorAll('.btn[data-stock]');
         addToCartButtons.forEach(button => {
             button.addEventListener('click', function (event) {
                 event.preventDefault();
-                const productName = this.parentElement.querySelector('h3').textContent;
-                const productPrice = parseInt(this.parentElement.querySelector('.harga').textContent.replace('Rp', '').replace(/\./g, '').trim());
+                const productName = this.getAttribute('data-name');
+                const productPrice = parseInt(this.getAttribute('data-price'));
+                const productStock = parseInt(this.getAttribute('data-stock'));
+    
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingProduct = cart.find(item => item.name === productName);
+    
+                if (existingProduct && existingProduct.quantity >= productStock) {
+                    alert(`Stok ${productName} hanya tersedia ${productStock}`);
+                    return;
+                }
+    
                 addToCart(productName, productPrice);
             });
         });
     }
-
+    
     function addToCart(name, price) {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const product = cart.find(item => item.name === name);
@@ -91,10 +95,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function renderCartItems() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const checkoutBtn = document.getElementById('checkoutBtn');
+    
         if (cart.length === 0) {
             cartItemsElement.innerHTML = "<p>Keranjang Anda kosong.</p>";
+            if (checkoutBtn) checkoutBtn.style.display = 'none';
         } else {
             cartItemsElement.innerHTML = '';
+            if (checkoutBtn) checkoutBtn.style.display = 'block';
+    
             cart.forEach(item => {
                 const cartItemElement = document.createElement('div');
                 cartItemElement.classList.add('cart-item');
@@ -110,10 +119,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 cartItemsElement.appendChild(cartItemElement);
             });
         }
-
+    
         const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
         cartTotalElement.textContent = total.toLocaleString();
     }
+    
 
     cartItemsElement.addEventListener('click', function (event) {
         if (event.target.classList.contains('change-quantity')) {
