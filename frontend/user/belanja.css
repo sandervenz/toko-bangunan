@@ -264,27 +264,14 @@
 
 /* Keranjang Icon */
 .cart {
-    position: fixed;
-    /* Menempatkan ikon di posisi tetap */
-    top: 35px;
-    /* Jarak dari atas */
-    right: 20px;
-    /* Jarak dari kanan */
+    position: absolute;
+    right: 40px;
     z-index: 1000;
-    /* Memastikan ikon keranjang tetap berada di atas elemen lainnya */
 }
 
 .cart .cart-icon {
     color: #fff;
     font-size: 2rem;
-    position: relative;
-    text-decoration: none;
-    border-radius: 50%;
-    padding: 10px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .cart .cart-count {
@@ -301,11 +288,6 @@
     text-align: center;
     line-height: 20px;
     padding: 0;
-}
-
-.cart .cart-icon:hover {
-    background-color: #d35400;
-    transform: scale(1.1);
 }
 
 .cart-modal {
@@ -395,35 +377,6 @@
 .cart-item .delete-icon:hover {
     color: #c0392b;
     /* Warna lebih gelap saat hover */
-}
-
-/* Ikon Kembali */
-.back-icon {
-    position: absolute;
-    top: 35px;
-    left: 20px;
-    /* Menempatkan ikon kembali di pojok kiri */
-    font-size: 2rem;
-    color: #fffcfc;
-    /* Warna ikon */
-    cursor: pointer;
-}
-
-.back-icon a {
-    color: #fffefe;
-    /* Warna ikon */
-    font-size: 2rem;
-    text-decoration: none;
-}
-
-.back-icon a:hover {
-    color: #e67e22;
-    /* Warna saat di-hover */
-}
-
-.back-icon i {
-    margin-right: 0px;
-    /* Menghapus jarak karena tidak ada teks */
 }
 
 .checkout-belanja {

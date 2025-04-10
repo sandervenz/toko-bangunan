@@ -13,35 +13,36 @@
 <body>
     <header>
         <div class="container">
+            <!-- Tombol Kembali di kiri atas -->
+            <div class="back-icon">
+                <a href="home.html" title="Kembali ke Beranda">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+    
+            <!-- Logo -->
             <div class="logo">
                 <h1>Toko Bangunan</h1>
             </div>
-            <div class="nav-container">
-                <!-- Ikon Keranjang -->
-                <div class="cart">
-                    <a href="#" class="cart-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">0</span>
-                    </a>
+    
+            <div class="cart">
+                <a href="#" class="cart-icon" id="openCartBtn" title="Lihat Keranjang">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    
+        <!-- Modal Keranjang -->
+        <div class="cart-modal" id="cartModal">
+            <div class="cart-modal-content">
+                <span class="close-btn" id="closeBtn">&times;</span>
+                <h2>Keranjang Belanja</h2>
+                <div class="cart-items" id="cartItems"></div>
+                <div class="cart-total">
+                    <p>Total: Rp <span id="cartTotal">0</span></p>
                 </div>
-
-                <!-- Ikon Kembali -->
-                <div class="back-icon">
-                    <a href="home.html"><i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <!-- Keranjang Modal -->
-                <div class="cart-modal" id="cartModal">
-                    <div class="cart-modal-content">
-                        <span class="close-btn" id="closeBtn">&times;</span>
-                        <h2>Keranjang Belanja</h2>
-                        <div class="cart-items" id="cartItems"></div>
-                        <div class="cart-total">
-                            <p>Total: Rp <span id="cartTotal">0</span></p>
-                        </div>
-                        <button id="checkoutBtn" class="checkout-btn">Checkout</button>
-                    </div>
-                </div>
+                <button id="checkoutBtn" class="checkout-btn">Checkout</button>
             </div>
         </div>
     </header>

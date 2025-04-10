@@ -20,7 +20,6 @@ body {
 /* Header Section */
 header {
     background: linear-gradient(135deg, #2c3e50, #34495e);
-    /* Gradien biru tua ke abu-abu */
     color: #fff;
     padding: 20px 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,31 +28,43 @@ header {
     z-index: 1000;
     display: flex;
     justify-content: center;
-    /* Membuat logo dan menu di tengah */
     align-items: center;
-    height: 120px;
-    /* Menyesuaikan tinggi header */
+    flex-wrap: wrap;
+}
+
+/* Container di dalam Header */
+header .container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
 }
 
 /* Logo */
-header .logo {
-    position: absolute;
-    left: 90px;
-    top: 31px;
-}
-
 header .logo h1 {
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 2px;
+    margin-left: 60px;
 }
 
-/* Menu Container di Tengah */
+/* Hamburger Menu Button */
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Navigation Container */
 header .nav-container {
     display: flex;
     justify-content: center;
-    /* Memastikan menu di tengah */
     flex-grow: 1;
 }
 
@@ -61,10 +72,8 @@ header nav ul {
     list-style: none;
     display: flex;
     gap: 30px;
-}
-
-header nav ul li {
-    position: relative;
+    margin: 0;
+    padding: 0;
 }
 
 header nav ul li a {
@@ -80,9 +89,51 @@ header nav ul li a {
 
 header nav ul li a:hover {
     background-color: #e67e22;
-    /* Oranye untuk aksen */
     color: #fff;
     border-radius: 5px;
+}
+
+/* ======================== */
+/* Responsive Styling */
+/* ======================== */
+@media (max-width: 768px) {
+    header {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        z-index: 1100;
+    }
+
+    .nav-container {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .nav-container.active {
+        display: flex;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+    }
+
+    nav ul li a {
+        width: 100%;
+        display: block;
+        padding: 15px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
 }
 
 /* Hero Section */
@@ -343,19 +394,25 @@ header nav ul li a:hover {
     }
 }
 
-/* Keranjang Icon */
-.cart {
-    position: relative;
-    margin-left: 20px;
+/* Tombol Kembali */
+.back-icon {
+    position: fixed;
 }
 
-.cart .cart-icon {
+.back-icon a {
     color: #fff;
-    font-size: 1.8rem;
-    position: relative;
-    text-decoration: none;
+    font-size: 1.5rem;
+    padding: 10px;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.back-icon a:hover {
+    background-color: #e67e22;
+    border-radius: 5px;
+}
+
+/* Keranjang Icon */
 .cart .cart-count {
     position: absolute;
     top: -5px;

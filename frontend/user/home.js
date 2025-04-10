@@ -181,3 +181,9 @@ document.addEventListener('DOMContentLoaded', function () {
     checkScroll();
 });
 
+const menuToggle = document.getElementById("menu-toggle");
+const navContainer = document.getElementById("nav-container");
+
+menuToggle.addEventListener("click", () => {
+    navContainer.classList.toggle("active");
+});
