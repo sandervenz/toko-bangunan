@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function renderProducts(products) {
         const container = document.querySelector('.produk-container');
         container.innerHTML = '';
+
+        console.log(products)
     
         products.forEach(product => {
             const item = document.createElement('div');
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
             let addToCartButton = '';
             if (product.stock > 0) {
-                addToCartButton = `<a href="#" class="btn" data-name="${product.name}" data-price="${product.price}" data-stock="${product.stock}">
+                addToCartButton = `<a href="#" class="btn" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" data-stock="${product.stock}">
                     <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
                 </a>`;
             } else {
@@ -55,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
         addToCartButtons.forEach(button => {
             button.addEventListener('click', function (event) {
                 event.preventDefault();
+                const id = this.getAttribute('data-id');
                 const productName = this.getAttribute('data-name');
                 const productPrice = parseInt(this.getAttribute('data-price'));
                 const productStock = parseInt(this.getAttribute('data-stock'));
@@ -67,24 +70,29 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
     
-                addToCart(productName, productPrice);
+                addToCart(id, productName, productPrice);
             });
         });
     }
     
-    function addToCart(name, price) {
+    function addToCart(id, name, price) {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const product = cart.find(item => item.name === name);
-
-        if (product) {
-            product.quantity++;
+        const existingProduct = cart.find(item => item.id == id);
+    
+        if (existingProduct) {
+            existingProduct.quantity++;
         } else {
-            cart.push({ name, price, quantity: 1 });
+            cart.push({
+                id: parseInt(id),
+                name,
+                price,
+                quantity: 1
+            });
         }
-
+    
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCart();
-    }
+    }  
 
     function updateCart() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];

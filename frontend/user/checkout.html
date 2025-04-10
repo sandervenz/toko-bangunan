@@ -21,9 +21,22 @@
         <div class="container">
             <h2>Rincian Pesanan</h2>
 
-            <!-- Daftar produk dari keranjang akan ditampilkan di sini -->
-            <div class="checkout-items" id="checkoutItems"></div>
-
+            <!-- Rincian Produk dalam Bentuk Tabel -->
+            <table class="checkout-items-table" id="checkoutItems">
+                <thead>
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Harga</th>
+                        <th>Jumlah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Akan diisi dengan JS -->
+                </tbody>
+            </table>
+            <div class="checkout-total">
+                <p><strong>Total:</strong> Rp <span id="checkoutTotal">0</span></p>
+            </div>
 
             <h3>Informasi Pengiriman</h3>
             <form id="checkoutForm">
@@ -48,48 +61,41 @@
         </div>
     </section>
 
-    <!-- Konfirmasi Pemesanan -->
-    <section id="order-summary">
-        <h2>Konfirmasi Pemesanan</h2>
-        <div id="order-details">
-            <p><strong>No Pemesanan:</strong> <span id="order-number"></span></p>
-            <p><strong>Tanggal Pemesanan:</strong> <span id="order-date"></span></p>
-            <p><strong>Kode Pelanggan:</strong> <span id="customer-code"></span></p>
-            <p><strong>Nama Pelanggan:</strong> <span id="customer-name"></span></p>
-            <p><strong>Alamat Pelanggan:</strong> <span id="customer-address"></span></p>
-            <p><strong>No Telepon:</strong> <span id="customer-phone"></span></p>
-            <p><strong>Uniq Transfer:</strong> <span id="unique-transfer"></span></p>
-            <p><strong>Status Bayar:</strong> <span id="payment-status"></span></p>
-        </div>
-    
-        <!-- Rincian Barang -->
-        <h3>Rincian Barang</h3>
-        <table id="order-items">
+    <!-- Modal Konfirmasi -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+          <h3>Konfirmasi Pemesanan</h3>
+          <p><strong>Nama:</strong> <span id="confirmName"></span></p>
+          <p><strong>Email:</strong> <span id="confirmEmail"></span></p>
+          <p><strong>Alamat:</strong> <span id="confirmAddress"></span></p>
+          <p><strong>Telepon:</strong> <span id="confirmPhone"></span></p>
+      
+          <table id="confirmTable">
             <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Kode</th>
-                    <th>Nama Barang</th>
-                    <th>Harga</th>
-                    <th>Jumlah</th>
-                    <th>Total</th>
-                </tr>
+              <tr>
+                <th>Nama Barang</th>
+                <th>Jumlah</th>
+                <th>Harga</th>
+              </tr>
             </thead>
-            <tbody>
-                <!-- Items will be inserted here dynamically -->
-            </tbody>
-        </table>
-    
-        <div id="order-totals">
-            <p><strong>Total Belanja:</strong> Rp <span id="total-shopping"></span></p>
-            <p><strong>Total Biaya Kirim:</strong> Rp <span id="shipping-fee"></span></p>
-            <p><strong>Grand Total:</strong> Rp <span id="grand-total"></span></p>
+            <tbody></tbody>
+          </table>
+      
+          <button id="submitOrderBtn">Pesan</button>
+          <button onclick="closeModal('confirmationModal')">Batal</button>
         </div>
-    
-        <!-- Button to Print -->
-        <button id="print-btn">Cetak Pemesanan</button>
-    </section>
+    </div>
+      
 
+    <!-- Modal Berhasil -->
+    <div id="successModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>Pesanan berhasil!</h3>
+            <p>Silakan download struk pemesanan Anda.</p>
+            <button id="downloadReceiptBtn">Download Struk</button>
+            <button onclick="closeModal('successModal')">Tutup</button>
+        </div>
+    </div>
 
     <script src="checkout.js"></script>
 </body>

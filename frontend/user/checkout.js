@@ -1,60 +1,111 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const checkoutForm = document.getElementById('checkoutForm');
-    
-    // Ambil informasi pelanggan dari form
-    const customerName = checkoutForm.querySelector('#name').value;
-    const customerEmail = checkoutForm.querySelector('#email').value;
-    const customerAddress = checkoutForm.querySelector('#address').value;
-    const customerPhone = checkoutForm.querySelector('#phone').value;
-    
-    // Misalkan data tambahan untuk transaksi
-    const orderNumber = 'ORD' + new Date().getTime(); // Membuat nomor pemesanan berdasarkan timestamp
-    const orderDate = new Date().toLocaleDateString();
-    const customerCode = 'CUST' + new Date().getMilliseconds();
-    const uniqueTransfer = Math.floor(Math.random() * 100000); // Angka acak sebagai kode unik transfer
-    const paymentStatus = 'Belum Dibayar'; // Status pembayaran bisa diubah sesuai dengan proses
+    const form = document.getElementById('checkoutForm');
 
-    // Menghitung total belanja
-    const totalShopping = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    
-    // Misalkan biaya kirim
-    const shippingFee = 50000; // Asumsi biaya kirim tetap Rp 50.000
-    
-    // Grand total (total belanja + biaya kirim)
-    const grandTotal = totalShopping + shippingFee;
+    console.log("Cart yang dikirim:", cart);
 
-    // Menampilkan data pemesanan
-    document.getElementById('order-number').textContent = orderNumber;
-    document.getElementById('order-date').textContent = orderDate;
-    document.getElementById('customer-code').textContent = customerCode;
-    document.getElementById('customer-name').textContent = customerName;
-    document.getElementById('customer-address').textContent = customerAddress;
-    document.getElementById('customer-phone').textContent = customerPhone;
-    document.getElementById('unique-transfer').textContent = uniqueTransfer;
-    document.getElementById('payment-status').textContent = paymentStatus;
+    const checkoutTableBody = document.querySelector('#checkoutItems tbody');
+    let totalHarga = 0;
 
-    // Menampilkan rincian barang
-    const orderItemsTable = document.getElementById('order-items').getElementsByTagName('tbody')[0];
-    cart.forEach((item, index) => {
-        const row = orderItemsTable.insertRow();
+    cart.forEach(item => {
+        const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${item.name}</td>
             <td>${item.name}</td>
             <td>Rp ${item.price.toLocaleString()}</td>
             <td>${item.quantity}</td>
-            <td>Rp ${(item.price * item.quantity).toLocaleString()}</td>
         `;
+        checkoutTableBody.appendChild(row);
+        totalHarga += item.price * item.quantity;
     });
 
-    // Menampilkan total belanja, biaya kirim, dan grand total
-    document.getElementById('total-shopping').textContent = totalShopping.toLocaleString();
-    document.getElementById('shipping-fee').textContent = shippingFee.toLocaleString();
-    document.getElementById('grand-total').textContent = grandTotal.toLocaleString();
+    document.getElementById('checkoutTotal').textContent = totalHarga.toLocaleString();
 
-    // Fungsi untuk cetak pemesanan
-    document.getElementById('print-btn').addEventListener('click', function() {
-        window.print(); // Memanggil print dialog untuk mencetak halaman
+
+    // Handle submit form
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const name = form.querySelector('#name').value.trim();
+        const email = form.querySelector('#email').value.trim();
+        const address = form.querySelector('#address').value.trim();
+        const phone = form.querySelector('#phone').value.trim();
+
+        if (!name || !email || !address || !phone) {
+            alert('Semua field wajib diisi.');
+            return;
+        }
+
+        // Tampilkan data di modal
+        document.getElementById('confirmName').textContent = name;
+        document.getElementById('confirmEmail').textContent = email;
+        document.getElementById('confirmAddress').textContent = address;
+        document.getElementById('confirmPhone').textContent = phone;
+
+        const tbody = document.querySelector('#confirmTable tbody');
+        tbody.innerHTML = '';
+        let totalHarga = 0;
+        cart.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td style="border: 1px solid #ccc; padding: 8px;">${item.name}</td>
+                <td style="border: 1px solid #ccc; padding: 8px; text-align: center;">${item.quantity}</td>
+                <td style="border: 1px solid #ccc; padding: 8px; text-align: right;">Rp ${item.price.toLocaleString()}</td>
+            `;
+            tbody.appendChild(row);
+            totalHarga += item.price * item.quantity;
+        });
+
+        // Tambahkan total harga di bawah tabel
+        const totalRow = document.createElement('tr');
+        totalRow.innerHTML = `
+            <td colspan="2" style="border: 1px solid #ccc; padding: 8px; text-align: right;"><strong>Total</strong></td>
+            <td style="border: 1px solid #ccc; padding: 8px; text-align: right;"><strong>Rp ${totalHarga.toLocaleString()}</strong></td>
+        `;
+        tbody.appendChild(totalRow);
+
+        showModal('confirmationModal');
+    });
+
+    // Handle tombol "Pesan"
+    document.getElementById('submitOrderBtn').addEventListener('click', function () {
+        const payload = {
+            name: document.getElementById('confirmName').textContent,
+            email: document.getElementById('confirmEmail').textContent,
+            address: document.getElementById('confirmAddress').textContent,
+            phone: document.getElementById('confirmPhone').textContent,
+            items: cart.map(item => ({
+                product_id: item.id,
+                quantity: item.quantity
+            }))
+        };
+
+        fetch('http://localhost/tokoBangunan/backend/public/order.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            closeModal('confirmationModal');
+            localStorage.removeItem('cart'); // Kosongkan keranjang
+            showModal('successModal');
+
+            // Simpan ID pesanan kalau perlu ambil struk
+            document.getElementById('downloadReceiptBtn').onclick = function () {
+                window.open(`http://localhost/tokoBangunan/backend/public/struk.php/${data.order_id}`, '_blank');
+            };
+        })
+        .catch(err => {
+            alert('Gagal memproses pesanan.');
+            console.error(err);
+        });
     });
 });
+
+function showModal(id) {
+    document.getElementById(id).style.display = 'flex';
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
