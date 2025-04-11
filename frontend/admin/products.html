@@ -21,8 +21,9 @@
             <header class="header">
                 <h1>Produk</h1>
                 <div class="user-info">
-                    <span>Admin</span>
-                    <i class="fas fa-user-circle"></i>
+                    <button id="logout-btn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
                 </div>
             </header>
 
@@ -105,14 +106,12 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="product-image">Gambar Produk</label>
-                        <div class="image-upload-container">
-                            <div class="image-preview">
-                                <img id="preview-img" src="https://via.placeholder.com/150?text=Pilih+Gambar" alt="Preview">
-                            </div>
-                            <input type="file" id="product-image" accept="image/*">
-                            <p class="help-text">Format: JPG, PNG, GIF. Maks 2MB</p>
+                        <label for="product-image-url">URL Gambar Produk</label>
+                        <input type="text" id="product-image-url" placeholder="https://example.com/image.jpg">
+                        <div class="image-preview">
+                            <img id="preview-img" src="https://via.placeholder.com/150?text=Preview" alt="Preview">
                         </div>
+                        <p class="help-text">Masukkan URL gambar (format: JPG, PNG, GIF)</p>
                     </div>
                     
                     <div class="form-group">

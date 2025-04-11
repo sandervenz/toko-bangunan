@@ -62,13 +62,14 @@ const productNameInput = document.getElementById('product-name');
 const productCategoryInput = document.getElementById('product-category');
 const productPriceInput = document.getElementById('product-price');
 const productStockInput = document.getElementById('product-stock');
-const productImageInput = document.getElementById('product-image');
+const productImageUrlInput = document.getElementById('product-image-url');
 const productDescriptionInput = document.getElementById('product-description');
 const previewImg = document.getElementById('preview-img');
 const cancelBtn = document.getElementById('cancel-btn');
 const deleteProductName = document.getElementById('delete-product-name');
 const cancelDeleteBtn = document.getElementById('cancel-delete');
 const confirmDeleteBtn = document.getElementById('confirm-delete');
+const logoutBtn = document.getElementById('logout-btn');
 
 // Global Variables
 let nextId = products.length + 1;
@@ -132,7 +133,7 @@ function showAddProductForm() {
     modalTitle.textContent = 'Tambah Produk';
     productForm.reset();
     productIdInput.value = '';
-    previewImg.src = 'https://via.placeholder.com/150?text=Pilih+Gambar';
+    previewImg.src = 'https://via.placeholder.com/150?text=Preview';
     
     productFormModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -151,7 +152,8 @@ function showEditProductForm(productId) {
     productPriceInput.value = product.price;
     productStockInput.value = product.stock;
     productDescriptionInput.value = product.description || '';
-    previewImg.src = product.image;
+    productImageUrlInput.value = product.image || '';
+    previewImg.src = product.image || 'https://via.placeholder.com/150?text=Preview';
     
     productFormModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -172,15 +174,13 @@ function closeModals() {
     document.body.style.overflow = 'auto';
 }
 
-// Handle Image Change
-function handleImageChange(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            previewImg.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
+// Handle Image URL Change
+function handleImageUrlChange() {
+    const imageUrl = productImageUrlInput.value.trim();
+    if (imageUrl) {
+        previewImg.src = imageUrl;
+    } else {
+        previewImg.src = 'https://via.placeholder.com/150?text=Preview';
     }
 }
 
@@ -198,7 +198,7 @@ function handleFormSubmit(e) {
         price: parseInt(productPriceInput.value),
         stock: parseInt(productStockInput.value),
         description: productDescriptionInput.value,
-        image: previewImg.src
+        image: productImageUrlInput.value || 'https://via.placeholder.com/150?text=No+Image'
     };
     
     if (productIdInput.value) {
@@ -252,16 +252,24 @@ function filterProducts() {
     renderProductsTable(filtered);
 }
 
+// Handle Logout
+function handleLogout() {
+    alert('Anda telah logout dari sistem.');
+    // Di sini bisa ditambahkan kode untuk redirect ke halaman login
+    // window.location.href = 'login.html';
+}
+
 // Event Listeners
 addProductBtn.addEventListener('click', showAddProductForm);
 closeButtons.forEach(btn => btn.addEventListener('click', closeModals));
 cancelBtn.addEventListener('click', closeModals);
 productForm.addEventListener('submit', handleFormSubmit);
-productImageInput.addEventListener('change', handleImageChange);
+productImageUrlInput.addEventListener('input', handleImageUrlChange);
 searchInput.addEventListener('input', filterProducts);
 categoryFilter.addEventListener('change', filterProducts);
 cancelDeleteBtn.addEventListener('click', closeModals);
 confirmDeleteBtn.addEventListener('click', deleteProduct);
+logoutBtn.addEventListener('click', handleLogout);
 
 // Close modal when clicking outside
 window.addEventListener('click', (e) => {
