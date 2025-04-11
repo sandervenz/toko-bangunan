@@ -24,11 +24,12 @@ const orders = [
             phone: "082345678901",
             address: "Jl. Sample No. 456, Bandung"
         },
-        total: 750000,
+        total: 280000,
         status: "diproses",
         items: [
-            { product: "Keyboard", quantity: 1, price: 500000 },
-            { product: "Headphone", quantity: 1, price: 250000 }
+            { product: "Semen Tiga Roda", quantity: 3, price: 75000 },
+            { product: "Paku", quantity: 1, price: 25000 },
+            { product: "Gergaji", quantity: 1, price: 30000 }
         ],
         date: "2023-06-16"
     },
