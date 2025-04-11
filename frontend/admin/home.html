@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Data Pemesanan</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">Admin Panel</div>
+            <ul class="menu">
+                <li class="active"><i class="fas fa-users"></i> Data Pemesanan</li>
+                <li id="produk-link"><i class="fas fa-box"></i> Produk</li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <header class="header">
+                <h1>Data Pemesanan</h1>
+                <div class="user-info">
+                    <button id="logout-btn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </header>
+
+            <div class="action-bar">
+                <div class="search-filter">
+                    <input type="text" id="search" placeholder="Cari pesanan...">
+                    <select id="status-filter">
+                        <option value="">Semua Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Selesai</option>
+                        <option value="cancelled">Dibatalkan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="orders-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Pelanggan</th>
+                            <th>Email</th>
+                            <th>No. Telp</th>
+                            <th>Total Harga</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data akan diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Detail Pesanan -->
+    <div class="modal" id="order-detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detail Pesanan</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="order-info">
+                    <div>
+                        <h4>Informasi Pelanggan</h4>
+                        <p><strong>Nama:</strong> <span id="customer-name"></span></p>
+                        <p><strong>Email:</strong> <span id="customer-email"></span></p>
+                        <p><strong>No. Telp:</strong> <span id="customer-phone"></span></p>
+                        <p><strong>Alamat:</strong> <span id="customer-address"></span></p>
+                    </div>
+                    <div>
+                        <h4>Informasi Pesanan</h4>
+                        <p><strong>Total Harga:</strong> <span id="order-total"></span></p>
+                        <p><strong>Status:</strong> <span id="order-status"></span></p>
+                        <div class="status-action">
+                            <select id="status-select">
+                                <option value="pending">Pending</option>
+                                <option value="completed">Selesai</option>
+                                <option value="cancelled">Dibatalkan</option>
+                            </select>
+                            <button id="update-status-btn" class="btn-primary">Update Status</button>
+                        </div>
+<!-- Di dalam modal-body (setelah tabel produk) -->
+                        <div class="order-summary">
+                            <div class="total-row">
+                                <span>Total Harga:</span>
+                                <span id="order-summary-total">Rp 280.000</span>
+                            </div>
+                            <div class="modal-actions">
+                                <button id="download-receipt-btn" class="btn-pdf">
+                                    <i class="fas fa-file-pdf"></i> Download Invoice
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4>Produk Dipesan</h4>
+                <div class="table-container">
+                    <table id="order-items-table">
+                        <thead>
+                            <tr>
+                                <th>Produk</th>
+                                <th>Jumlah</th>
+                                <th>Harga Satuan</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data produk akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="home.js"></script>
+</body>
+</html>

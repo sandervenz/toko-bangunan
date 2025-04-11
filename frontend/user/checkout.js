@@ -90,10 +90,28 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.removeItem('cart'); // Kosongkan keranjang
             showModal('successModal');
 
-            // Simpan ID pesanan kalau perlu ambil struk
-            document.getElementById('downloadReceiptBtn').onclick = function () {
-                window.open(`http://localhost/tokoBangunan/backend/public/struk.php/${data.order_id}`, '_blank');
-            };
+            document.getElementById('downloadReceiptBtn').onclick = async function () {
+                const orderId = data.order_id;
+            
+                try {
+                    const res = await fetch(`http://localhost/tokoBangunan/backend/public/struk.php/${orderId}`);
+                    if (!res.ok) throw new Error('Gagal mengunduh struk');
+            
+                    const blob = await res.blob();
+                    const url = window.URL.createObjectURL(blob);
+            
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `struk_pesanan_${orderId}.pdf`; // Ganti ekstensi sesuai file
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                } catch (err) {
+                    alert('Struk tidak bisa diunduh. Silakan coba lagi.');
+                    console.error('Download error:', err);
+                }
+            };            
         })
         .catch(err => {
             alert('Gagal memproses pesanan.');

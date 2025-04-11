@@ -5,7 +5,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     let password = document.getElementById("password").value;
 
     // Memeriksa username dan password
-    if (username === "momok" && password === "123") {
+    if (username === "admin" && password === "admin123") {
         // Jika benar, arahkan ke halaman Home
         window.location.href = "home.html"; // Alihkan ke halaman Home
     } else {

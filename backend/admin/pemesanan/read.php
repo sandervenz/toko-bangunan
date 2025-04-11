@@ -1,8 +1,9 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once '../../config/database.php';
-require_once '../auth/verify.php';
+// require_once '../auth/verify.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
