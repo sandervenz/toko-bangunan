@@ -8,7 +8,10 @@ let orders = [];
 
 async function fetchOrders() {
     try {
-        const response = await fetch('http://localhost/tokoBangunan/backend/admin/pemesanan/read.php');
+        const response = await fetch('http://localhost/tokoBangunan/backend/admin/pemesanan/read.php', {
+            method: 'GET',
+            credentials: 'include',
+        });
         const data = await response.json();
         orders = data.data;
         renderOrdersTable(orders);
@@ -50,7 +53,10 @@ function renderOrdersTable(filteredOrders = orders) {
 
 async function showOrderDetail(orderId) {
     try {
-        const response = await fetch(`http://localhost/tokoBangunan/backend/admin/pemesanan/read.php/${orderId}`);
+        const response = await fetch(`http://localhost/tokoBangunan/backend/admin/pemesanan/read.php/${orderId}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
         const data = await response.json();
         const order = data.data;
 
@@ -97,6 +103,7 @@ async function updateOrderStatus(orderId) {
         const response = await fetch(`http://localhost/tokoBangunan/backend/admin/pemesanan/update.php/${orderId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
             body: JSON.stringify({ status: newStatus })
         });
 
@@ -174,6 +181,7 @@ document.getElementById("logout-btn").addEventListener("click", async () => {
     try {
         const response = await fetch('http://localhost/tokoBangunan/backend/admin/auth/logout.php', {
             method: 'POST',
+            credentials: 'include',
         });
 
         if (!response.ok) throw new Error('Logout gagal');
