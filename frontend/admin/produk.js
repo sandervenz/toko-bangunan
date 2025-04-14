@@ -1,294 +1,194 @@
-// Data Dummy Produk
-const products = [
-    {
-        id: 1,
-        name: "Laptop Asus VivoBook",
-        category: "Elektronik",
-        price: 8500000,
-        stock: 15,
-        image: "https://via.placeholder.com/150?text=Laptop",
-        description: "Laptop dengan performa tinggi untuk kebutuhan sehari-hari."
-    },
-    {
-        id: 2,
-        name: "Kemeja Pria Lengan Panjang",
-        category: "Pakaian",
-        price: 250000,
-        stock: 50,
-        image: "https://via.placeholder.com/150?text=Kemeja",
-        description: "Kemeja formal untuk pria dengan bahan berkualitas."
-    },
-    {
-        id: 3,
-        name: "Coklat Premium",
-        category: "Makanan",
-        price: 75000,
-        stock: 100,
-        image: "https://via.placeholder.com/150?text=Coklat",
-        description: "Coklat premium dengan rasa yang lezat."
-    },
-    {
-        id: 4,
-        name: "Smartphone Samsung Galaxy",
-        category: "Elektronik",
-        price: 3500000,
-        stock: 25,
-        image: "https://via.placeholder.com/150?text=Smartphone",
-        description: "Smartphone dengan kamera berkualitas tinggi."
-    },
-    {
-        id: 5,
-        name: "Sepatu Olahraga",
-        category: "Pakaian",
-        price: 450000,
-        stock: 30,
-        image: "https://via.placeholder.com/150?text=Sepatu",
-        description: "Sepatu olahraga dengan desain modern dan nyaman dipakai."
-    }
-];
+document.addEventListener("DOMContentLoaded", () => {
+    const API_BASE = "http://localhost/tokoBangunan/backend/admin";
+    const productTableBody = document.querySelector("#products-table tbody");
+    const categoryFilter = document.getElementById("category-filter");
+    const productCategorySelect = document.getElementById("product-category");
+    const logoutBtn = document.getElementById("logout-btn");
 
-// DOM Elements
-const productsTable = document.getElementById('products-table').getElementsByTagName('tbody')[0];
-const searchInput = document.getElementById('search');
-const categoryFilter = document.getElementById('category-filter');
-const addProductBtn = document.getElementById('add-product-btn');
-const productFormModal = document.getElementById('product-form-modal');
-const deleteModal = document.getElementById('delete-modal');
-const closeButtons = document.querySelectorAll('.close');
-const productForm = document.getElementById('product-form');
-const modalTitle = document.getElementById('modal-title');
-const productIdInput = document.getElementById('product-id');
-const productNameInput = document.getElementById('product-name');
-const productCategoryInput = document.getElementById('product-category');
-const productPriceInput = document.getElementById('product-price');
-const productStockInput = document.getElementById('product-stock');
-const productImageUrlInput = document.getElementById('product-image-url');
-const productDescriptionInput = document.getElementById('product-description');
-const previewImg = document.getElementById('preview-img');
-const cancelBtn = document.getElementById('cancel-btn');
-const deleteProductName = document.getElementById('delete-product-name');
-const cancelDeleteBtn = document.getElementById('cancel-delete');
-const confirmDeleteBtn = document.getElementById('confirm-delete');
+    let kategoriMap = {};
 
-// Global Variables
-let nextId = products.length + 1;
-let productToDelete = null;
-
-// Load products from localStorage or use dummy data
-function loadProducts() {
-    const storedProducts = localStorage.getItem('products');
-    if (storedProducts) {
-        return JSON.parse(storedProducts);
-    }
-    // Save dummy data to localStorage
-    localStorage.setItem('products', JSON.stringify(products));
-    return products;
-}
-
-// Save products to localStorage
-function saveProducts(productsData) {
-    localStorage.setItem('products', JSON.stringify(productsData));
-}
-
-// Render Products Table
-function renderProductsTable(filteredProducts = loadProducts()) {
-    productsTable.innerHTML = '';
-    
-    filteredProducts.forEach((product, index) => {
-        const row = document.createElement('tr');
-        
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td><img src="${product.image}" alt="${product.name}" class="product-image"></td>
-            <td>${product.name}</td>
-            <td>${product.category}</td>
-            <td>Rp ${product.price.toLocaleString('id-ID')}</td>
-            <td>${product.stock}</td>
-            <td class="action-buttons">
-                <button class="btn-edit edit-product" data-id="${product.id}">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn-delete delete-product" data-id="${product.id}" data-name="${product.name}">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
-        `;
-        
-        productsTable.appendChild(row);
+    // Logout
+    logoutBtn.addEventListener("click", () => {
+        fetch(`${API_BASE}/auth/logout.php`, {
+            method: "POST",
+            credentials: "include",
+        }).then(() => {
+            window.location.href = "login.html";
+        });
     });
-    
-    // Add event listeners to action buttons
-    document.querySelectorAll('.edit-product').forEach(btn => {
-        btn.addEventListener('click', () => showEditProductForm(btn.getAttribute('data-id')));
-    });
-    
-    document.querySelectorAll('.delete-product').forEach(btn => {
-        btn.addEventListener('click', () => showDeleteModal(btn.getAttribute('data-id'), btn.getAttribute('data-name')));
-    });
-}
 
-// Show Add Product Form
-function showAddProductForm() {
-    modalTitle.textContent = 'Tambah Produk';
-    productForm.reset();
-    productIdInput.value = '';
-    previewImg.src = 'https://via.placeholder.com/150?text=Preview';
-    
-    productFormModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-// Show Edit Product Form
-function showEditProductForm(productId) {
-    const allProducts = loadProducts();
-    const product = allProducts.find(p => p.id == productId);
-    if (!product) return;
-    
-    modalTitle.textContent = 'Edit Produk';
-    productIdInput.value = product.id;
-    productNameInput.value = product.name;
-    productCategoryInput.value = product.category;
-    productPriceInput.value = product.price;
-    productStockInput.value = product.stock;
-    productDescriptionInput.value = product.description || '';
-    productImageUrlInput.value = product.image || '';
-    previewImg.src = product.image || 'https://via.placeholder.com/150?text=Preview';
-    
-    productFormModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-// Show Delete Confirmation Modal
-function showDeleteModal(productId, productName) {
-    deleteProductName.textContent = productName;
-    productToDelete = productId;
-    deleteModal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-// Close Modals
-function closeModals() {
-    productFormModal.style.display = 'none';
-    deleteModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-}
-
-// Handle Image URL Change
-function handleImageUrlChange() {
-    const imageUrl = productImageUrlInput.value.trim();
-    if (imageUrl) {
-        previewImg.src = imageUrl;
-    } else {
-        previewImg.src = 'https://via.placeholder.com/150?text=Preview';
+    // Load kategori ke filter dan form
+    function loadCategories() {
+        fetch(`${API_BASE}/kategori/read.php`, {
+            credentials: "include",
+        })
+            .then(res => res.json())
+            .then(data => {
+                kategoriMap = {};
+                categoryFilter.innerHTML = `<option value="">Semua Kategori</option>`;
+                productCategorySelect.innerHTML = `<option value="">Pilih Kategori</option>`;
+                data.forEach(kategori => {
+                    kategoriMap[kategori.id] = kategori.name;
+                    const option = `<option value="${kategori.id}">${kategori.name}</option>`;
+                    categoryFilter.insertAdjacentHTML("beforeend", option);
+                    productCategorySelect.insertAdjacentHTML("beforeend", option);
+                });
+            });
     }
-}
 
-// Handle Form Submit
-function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    const allProducts = loadProducts();
-    const productId = productIdInput.value ? parseInt(productIdInput.value) : nextId++;
-    
-    const productData = {
-        id: productId,
-        name: productNameInput.value,
-        category: productCategoryInput.value,
-        price: parseInt(productPriceInput.value),
-        stock: parseInt(productStockInput.value),
-        description: productDescriptionInput.value,
-        image: productImageUrlInput.value || 'https://via.placeholder.com/150?text=No+Image'
-    };
-    
-    if (productIdInput.value) {
-        // Update existing product
-        const index = allProducts.findIndex(p => p.id == productId);
-        if (index !== -1) {
-            allProducts[index] = productData;
-        }
-    } else {
-        // Add new product
-        allProducts.push(productData);
+    // Load produk
+    function loadProducts() {
+        fetch(`${API_BASE}/produk/read.php`, {
+            credentials: "include",
+        })
+            .then(res => res.json())
+            .then(data => renderProducts(data));
     }
-    
-    saveProducts(allProducts);
-    renderProductsTable();
-    closeModals();
-}
 
-// Delete Product
-function deleteProduct() {
-    if (!productToDelete) return;
-    
-    const allProducts = loadProducts();
-    const updatedProducts = allProducts.filter(p => p.id != productToDelete);
-    
-    saveProducts(updatedProducts);
-    renderProductsTable();
-    closeModals();
-}
+    // Render produk ke tabel
+    function renderProducts(products) {
+        const searchTerm = document.getElementById("search").value.toLowerCase();
+        const selectedCategory = categoryFilter.value;
 
-// Filter Products
-function filterProducts() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const category = categoryFilter.value;
-    
-    const allProducts = loadProducts();
-    
-    let filtered = allProducts;
-    
-    if (searchTerm) {
-        filtered = filtered.filter(product => 
-            product.name.toLowerCase().includes(searchTerm) || 
-            (product.description && product.description.toLowerCase().includes(searchTerm))
-        );
-    }
-    
-    if (category) {
-        filtered = filtered.filter(product => product.category === category);
-    }
-    
-    renderProductsTable(filtered);
-}
-
-// Event Listeners
-addProductBtn.addEventListener('click', showAddProductForm);
-closeButtons.forEach(btn => btn.addEventListener('click', closeModals));
-cancelBtn.addEventListener('click', closeModals);
-productForm.addEventListener('submit', handleFormSubmit);
-productImageUrlInput.addEventListener('input', handleImageUrlChange);
-searchInput.addEventListener('input', filterProducts);
-categoryFilter.addEventListener('change', filterProducts);
-cancelDeleteBtn.addEventListener('click', closeModals);
-confirmDeleteBtn.addEventListener('click', deleteProduct);
-
-// Close modal when clicking outside
-window.addEventListener('click', (e) => {
-    if (e.target === productFormModal || e.target === deleteModal) {
-        closeModals();
-    }
-});
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    renderProductsTable();
-});
-
-document.getElementById("order-link").addEventListener("click", function () {
-    window.location.href = "home.html";
-});
-
-document.getElementById("logout-btn").addEventListener("click", async () => {
-    try {
-        const response = await fetch('http://localhost/tokoBangunan/backend/admin/auth/logout.php', {
-            method: 'POST',
+        const filtered = products.filter(p => {
+            const matchName = p.name.toLowerCase().includes(searchTerm);
+            const matchCategory = selectedCategory === "" || p.category_id == selectedCategory;
+            return matchName && matchCategory;
         });
 
-        if (!response.ok) throw new Error('Logout gagal');
-
-        window.location.href = 'login.html';
-    } catch (error) {
-        console.error('Gagal logout:', error);
-        alert('Gagal logout. Silakan coba lagi.');
+        productTableBody.innerHTML = "";
+        filtered.forEach((product, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td><img src="${product.image}" alt="${product.name}" width="50"></td>
+                <td>${product.name}</td>
+                <td>${kategoriMap[product.category_id] || "Tidak Diketahui"}</td>
+                <td>Rp ${parseInt(product.price).toLocaleString()}</td>
+                <td>${product.stock}</td>
+                <td>
+                    <button class="btn-edit edit-product" data-id="${product.id}"><i class="fas fa-edit"></i></button>
+                    <button class="btn-delete delete-product" data-id="${product.id}" data-name="${product.name}"><i class="fas fa-trash-alt"></i></button>
+                </td>
+            `;
+            productTableBody.appendChild(row);
+        });
     }
+
+    // Filter dan search
+    document.getElementById("search").addEventListener("input", loadProducts);
+    categoryFilter.addEventListener("change", loadProducts);
+
+    // Gambar preview
+    document.getElementById("product-image-url").addEventListener("input", (e) => {
+        document.getElementById("preview-img").src = e.target.value || "https://via.placeholder.com/150?text=Preview";
+    });
+
+    // Modal logic
+    const modal = document.getElementById("product-form-modal");
+    const deleteModal = document.getElementById("delete-modal");
+    const form = document.getElementById("product-form");
+    const modalTitle = document.getElementById("modal-title");
+    const addBtn = document.getElementById("add-product-btn");
+    const cancelBtn = document.getElementById("cancel-btn");
+    const closeBtns = document.querySelectorAll(".modal .close");
+
+    addBtn.onclick = () => {
+        modalTitle.textContent = "Tambah Produk";
+        form.reset();
+        document.getElementById("product-id").value = "";
+        document.getElementById("preview-img").src = "https://via.placeholder.com/150?text=Preview";
+        modal.style.display = "block";
+    };
+
+    cancelBtn.onclick = () => modal.style.display = "none";
+    closeBtns.forEach(btn => btn.onclick = () => btn.closest(".modal").style.display = "none");
+
+    window.onclick = (e) => {
+        if (e.target == modal) modal.style.display = "none";
+        if (e.target == deleteModal) deleteModal.style.display = "none";
+    };
+
+    // Simpan produk
+    form.onsubmit = (e) => {
+        e.preventDefault();
+        const id = document.getElementById("product-id").value;
+        const data = {
+            name: document.getElementById("product-name").value,
+            category_id: parseInt(document.getElementById("product-category").value),
+            price: parseInt(document.getElementById("product-price").value),
+            stock: parseInt(document.getElementById("product-stock").value),
+            image: document.getElementById("product-image-url").value,
+            description: document.getElementById("product-description").value
+        };
+        if (id) data.id = parseInt(id);
+
+        const endpoint = id ? `update.php/${id}` : "create.php";
+        const method = id ? "PUT" : "POST";
+
+        fetch(`${API_BASE}/produk/${endpoint}`, {
+            method: method,
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(() => {
+                modal.style.display = "none";
+                loadProducts();
+            });
+    };
+
+    // Edit produk
+    productTableBody.addEventListener("click", (e) => {
+        if (e.target.closest(".edit-product")) {
+            const id = e.target.closest(".edit-product").dataset.id;
+            fetch(`${API_BASE}/produk/read.php/${id}`, {
+                credentials: "include"
+            })
+                .then(res => res.json())
+                .then(data => {
+                    modalTitle.textContent = "Edit Produk";
+                    document.getElementById("product-id").value = data.id;
+                    document.getElementById("product-name").value = data.name;
+                    document.getElementById("product-category").value = data.category_id;
+                    document.getElementById("product-price").value = data.price;
+                    document.getElementById("product-stock").value = data.stock;
+                    document.getElementById("product-image-url").value = data.image;
+                    document.getElementById("product-description").value = data.description;
+                    document.getElementById("preview-img").src = data.image;
+                    modal.style.display = "block";
+                });
+        }
+
+        // Hapus produk
+        if (e.target.closest(".delete-product")) {
+            const id = e.target.closest(".delete-product").dataset.id;
+            const name = e.target.closest(".delete-product").dataset.name;
+            document.getElementById("delete-product-name").textContent = name;
+            deleteModal.style.display = "block";
+
+            document.getElementById("confirm-delete").onclick = () => {
+                fetch(`${API_BASE}/produk/delete.php/${id}`, {
+                    method: "DELETE",
+                    credentials: "include",
+                })
+                    .then(res => res.json())
+                    .then(() => {
+                        deleteModal.style.display = "none";
+                        loadProducts();
+                    })
+                    .catch(err => console.error("Delete error:", err));
+                
+            };
+
+            document.getElementById("cancel-delete").onclick = () => {
+                deleteModal.style.display = "none";
+            };
+        }
+    });
+
+    // Init
+    loadCategories();
+    loadProducts();
 });
